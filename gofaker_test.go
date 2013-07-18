@@ -9,32 +9,32 @@ import (
 
 func TestNewFaker(t *testing.T){
 	f1, _ := NewFaker("ja_JP")
-	fmt.Println(f1.name.Phone)
-	fmt.Println(f1.name.Last_name, f1.name.Last_name_alt)
-	fmt.Println(f1.name.First_name, f1.name.First_name_alt)
-	fmt.Println(f1.name.Title)
+	fmt.Println(f1.Name.Phone)
+	fmt.Println(f1.Name.Last_name, f1.Name.Last_name_alt)
+	fmt.Println(f1.Name.First_name, f1.Name.First_name_alt)
+	fmt.Println(f1.Name.Title)
 
 	f2, _ := NewFaker("en_US")
-	fmt.Println(f2.name.Phone)
-	fmt.Println(f2.name.Last_name)
-	fmt.Println(f2.name.First_name)
+	fmt.Println(f2.Name.Phone)
+	fmt.Println(f2.Name.Last_name)
+	fmt.Println(f2.Name.First_name)
 }
 
 func TestCompany(t *testing.T){
 	f1, _ := NewFaker("ja_JP")
-	fmt.Println(f1.company.Name)
+	fmt.Println(f1.Company.Name)
 }
 
 func TestInternet(t *testing.T){
 	f1, _ := NewFaker("ja_JP")
-	fmt.Println(f1.internet.Url)
-	fmt.Println(f1.internet.Domain)
-	fmt.Println(f1.internet.Email)
+	fmt.Println(f1.Internet.Url)
+	fmt.Println(f1.Internet.Domain)
+	fmt.Println(f1.Internet.Email)
 }
 
 func TestAddress(t *testing.T){
 	f1, _ := NewFaker("ja_JP")
-	fmt.Println(f1.address.City)
+	fmt.Println(f1.Address.City)
 }
 
 

@@ -67,11 +67,6 @@ internet
 - Domain
 - Email
 
-
-Available Data
-------------------
-
-
 The giants on whose shoulders this works stands
 ----------------------------------------------------
 

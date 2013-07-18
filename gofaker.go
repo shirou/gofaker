@@ -43,7 +43,7 @@ func NewFaker(locale string, dict string) (Faker, error){
 }
 
 // Read contents from file and split by new line.
-func ReadLines(filename string) ([]string, error) {
+func readLines(filename string) ([]string, error) {
 	f, err := os.Open(filename)
 	if err != nil {
 		return []string{""}, err
@@ -62,7 +62,7 @@ func ReadLines(filename string) ([]string, error) {
 	return ret, err
 }
 
-func Replace(original string) string {
+func replace(original string) string {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	rep_func := func(s rune) rune {
 		if s == '#'{
@@ -76,18 +76,18 @@ func Replace(original string) string {
 }
 
 
-func PickOne(filepath string) (string, error){
-	s, _ := ReadLines(filepath)
+func pickOne(filepath string) (string, error){
+	s, _ := readLines(filepath)
 
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	index := r.Intn(len(s))
 	orig := s[index]
 
-	return Replace(orig), nil
+	return replace(orig), nil
 }
 
 
-func SearchDictFile(locale string, fieldName string) (string, error){
+func searchDictFile(locale string, fieldName string) (string, error){
 	filename := filepath.Join(dict_path, locale, fieldName)
 	if _, err := os.Stat(filename); err == nil {
 		return filename, nil
@@ -103,13 +103,13 @@ func SearchDictFile(locale string, fieldName string) (string, error){
 }
 
 func GetValue(locale string, fieldName string) string{
-	filename, err := SearchDictFile(locale, fieldName)
+	filename, err := searchDictFile(locale, fieldName)
 	if err != nil {
 		fmt.Println("Could not find dictionary file: " + filepath.Join(dict_path, fieldName) + " of " + locale)
 		os.Exit(-1)
 	}
 
-	ret, err := PickOne(filename)
+	ret, err := pickOne(filename)
 	if err != nil {
 		fmt.Println("Could not get value")
 		os.Exit(-1)

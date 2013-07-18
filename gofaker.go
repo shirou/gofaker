@@ -20,16 +20,17 @@ type Faker struct {
 	Internet Internet
 }
 
-const DICTDIRNAME = "dict"
+var dict_path = "dict"
 
 
-func NewFaker(locale string, dict_path string) (Faker, error){
-	if dict_path == ""{
-		dict_path = "dict"
+func NewFaker(locale string, dict string) (Faker, error){
+	if dict == ""{
+		dict = "dict/"
 	}
-	if !filepath.IsAbs(dict_path) {
-		dict_path, _ = filepath.Abs(filepath.Join(".", dict_path))
+	if !filepath.IsAbs(dict) {
+		dict, _ = filepath.Abs(filepath.Join(".", dict))
 	}
+	dict_path = dict
 
 	f := Faker{}
 	f.Name = NewName(locale)
@@ -88,28 +89,28 @@ func PickOne(filepath string) (string, error){
 
 
 func SearchDictFile(locale string, fieldName string) (string, error){
-	filename := filepath.Join(DICTDIRNAME, locale, fieldName)
+	filename := filepath.Join(dict_path, locale, fieldName)
 	if _, err := os.Stat(filename); err == nil {
 		return filename, nil
 	}
 
-	// a dict file is not in that locale. try to read base values.
-	filename = filepath.Join(DICTDIRNAME, "base", fieldName)
+	// a dict file is not in that locale. try to read base directory.
+	filename = filepath.Join(dict_path, "base", fieldName)
 	if _, err := os.Stat(filename); err == nil {
 		return filename, nil
 	}else{
-		return "", errors.New("Could not find dictionaly:" + filename)
+		return "", errors.New("Could not find dictionary:" + filename)
 	}
 }
 
 func GetValue(locale string, fieldName string) string{
-	filepath, err := SearchDictFile(locale, fieldName)
+	filename, err := SearchDictFile(locale, fieldName)
 	if err != nil {
-		fmt.Println("Could not find dictionary: file: " + fieldName + " of " + locale)
+		fmt.Println("Could not find dictionary file: " + filepath.Join(dict_path, fieldName) + " of " + locale)
 		os.Exit(-1)
 	}
 
-	ret, err := PickOne(filepath)
+	ret, err := PickOne(filename)
 	if err != nil {
 		fmt.Println("Could not get value")
 		os.Exit(-1)

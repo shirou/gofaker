@@ -21,7 +21,7 @@ func TestNewFaker(t *testing.T){
 }
 
 func TestCompany(t *testing.T){
-	f1, _ := NewFaker("ja_JP", ".")
+	f1, _ := NewFaker("ja_JP", "dict")
 	fmt.Println(f1.Company.Name)
 }
 

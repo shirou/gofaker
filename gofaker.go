@@ -14,10 +14,10 @@ import (
 )
 
 type Faker struct {
-	name   Name
-	address Address
-	company Company
-	internet Internet
+	Name   Name
+	Address Address
+	Company Company
+	Internet Internet
 }
 
 const DICTDIRNAME = "dict"
@@ -28,10 +28,10 @@ func NewFaker(locale string) (Faker, error){
 	fmt.Println(locale)
 
 	f := Faker{}
-	f.name = NewName(locale)
-	f.address = NewAddress(locale)
-	f.company = NewCompany(locale)
-	f.internet = NewInternet(locale)
+	f.Name = NewName(locale)
+	f.Address = NewAddress(locale)
+	f.Company = NewCompany(locale)
+	f.Internet = NewInternet(locale)
 
 	return f, nil
 

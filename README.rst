@@ -8,14 +8,26 @@ How to use
 
 ::
 
-   import "bitbucket.org/r_rudi/gofaker"
+   import (
+   	"fmt"
+   	"bitbucket.org/r_rudi/gofaker"
+   )
 
-   faker, _ := gofaker.NewFaker("en_US")
-   fmt.Println(faker.name.Phone)
-   fmt.Println(faker.name.Last_name)
-   fmt.Println(faker.name.First_name)
+   func main(){
+   	faker, _ := gofaker.NewFaker("en_US", "src/bitbucket.org/r_rudi/gofaker/dict/")
+   	fmt.Printf("Name: %s %s\n", faker.Name.First_name, faker.Name.Last_name)
+   	fmt.Printf("Phone: %s\n", faker.Name.Phone)
+   	fmt.Printf("%s %s %s, %s\n", faker.Address.Building_number, faker.Address.Street, faker.Address.City, faker.Address.State)
+   	fmt.Printf("Zip: %s\n", faker.Address.Zipcode)
+   }
 
-You can pass a locale string to NewFaker().
+Result::
+
+   Name: Lois Evans
+   Phone: 2-(078)367-1331
+   3 Boyd Tustin, Ohio
+   Zip: 65022-1364
+
 
 Dictonary
 ---------------
@@ -25,12 +37,37 @@ locale string.
 
 ::
 
-  
+   dict
+   |-- base
+   |   |-- building_numbers
+   |   |-- cities
+   |   |-- company_names
+   |   |-- phone
+   |   `-- ...
+   `-- ja_JP
+       |-- building_numbers
+       |-- female_first_names
+       |-- last_names
+       |-- male_first_names
+       |-- phone
+       `-- zipcode
 
-
-go faker search under the locale directory at first, if not find, then
+gofaker searchs under the locale directory at first, if not find, then
 search from "base" directroy.
 
+alt
+-----------
+
+A dictonary file has one value by each line. But some files such as
+last_names and first_names have multiple values which are separeted by "|". ex) california|CA
+
+This is the alt value and can be used as "_alt" valiable.
+
+::
+
+  fmt.Println(faker.Name.Last_name_alt)
+
+This can be used as "Furigana" or Abbrev value.
 
 Available Data
 ------------------

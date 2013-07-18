@@ -3,7 +3,7 @@ package gofaker
 import (
 	"os"
 	"fmt"
-	"path"
+	"path/filepath"
 	"errors"
 	"bufio"
 	"strings"
@@ -23,9 +23,13 @@ type Faker struct {
 const DICTDIRNAME = "dict"
 
 
-func NewFaker(locale string) (Faker, error){
-
-	fmt.Println(locale)
+func NewFaker(locale string, dict_path string) (Faker, error){
+	if dict_path == ""{
+		dict_path = "dict"
+	}
+	if !filepath.IsAbs(dict_path) {
+		dict_path, _ = filepath.Abs(filepath.Join(".", dict_path))
+	}
 
 	f := Faker{}
 	f.Name = NewName(locale)
@@ -84,13 +88,13 @@ func PickOne(filepath string) (string, error){
 
 
 func SearchDictFile(locale string, fieldName string) (string, error){
-	filename := path.Join(DICTDIRNAME, locale, fieldName)
+	filename := filepath.Join(DICTDIRNAME, locale, fieldName)
 	if _, err := os.Stat(filename); err == nil {
 		return filename, nil
 	}
 
 	// a dict file is not in that locale. try to read base values.
-	filename = path.Join(DICTDIRNAME, "base", fieldName)
+	filename = filepath.Join(DICTDIRNAME, "base", fieldName)
 	if _, err := os.Stat(filename); err == nil {
 		return filename, nil
 	}else{

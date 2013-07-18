@@ -20,6 +20,7 @@ type Faker struct {
 	Internet Internet
 }
 
+// dictionary path
 var dict_path = "dict"
 
 
@@ -42,7 +43,7 @@ func NewFaker(locale string, dict string) (Faker, error){
 
 }
 
-// Read contents from file and split by new line.
+// readLines reads contents from file and split by new line.
 func readLines(filename string) ([]string, error) {
 	f, err := os.Open(filename)
 	if err != nil {
@@ -62,6 +63,7 @@ func readLines(filename string) ([]string, error) {
 	return ret, err
 }
 
+// replace can replace # to random number or 0-9
 func replace(original string) string {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	rep_func := func(s rune) rune {
@@ -75,7 +77,7 @@ func replace(original string) string {
 	return strings.Map(rep_func, original)
 }
 
-
+// pickOne picks one value from a array which is read from a file.
 func pickOne(filepath string) (string, error){
 	s, _ := readLines(filepath)
 
@@ -86,7 +88,9 @@ func pickOne(filepath string) (string, error){
 	return replace(orig), nil
 }
 
-
+// searchDictFile searchs a dictionary file. At first, search locale directory under the dict_path.
+// if not find, search "base" directory.
+// fieldName should be same as filename.
 func searchDictFile(locale string, fieldName string) (string, error){
 	filename := filepath.Join(dict_path, locale, fieldName)
 	if _, err := os.Stat(filename); err == nil {
@@ -102,6 +106,9 @@ func searchDictFile(locale string, fieldName string) (string, error){
 	}
 }
 
+
+// GetValue returnes a value from specified locale and fieldName
+// locale example: en_US, ja_JP
 func GetValue(locale string, fieldName string) string{
 	filename, err := searchDictFile(locale, fieldName)
 	if err != nil {

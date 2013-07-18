@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+
 type Name struct {
 	First_name string
 	First_name_alt string
@@ -14,6 +15,7 @@ type Name struct {
 	Title  string
 }
 
+// NewName returnes Name struct which includes fake data.
 func NewName(locale string) Name{
 	b := Name{}
 

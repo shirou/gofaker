@@ -69,9 +69,8 @@ func Replace(original string) string {
 			str := strconv.Itoa(r.Intn(9))
 			rr, _ := utf8.DecodeLastRuneInString(str)
 			return rr
-		}else{
-			return s
 		}
+		return s
 	}
 	return strings.Map(rep_func, original)
 }
